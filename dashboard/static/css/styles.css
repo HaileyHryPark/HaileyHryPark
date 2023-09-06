@@ -31,8 +31,29 @@
   font-size:180%;
 }
 
+.fa {
+   text-decoration: none;
+   color: black;
+}
+
+.fa:hover {
+  opacity: 0.9;
+}
+
+.sidebar-list-content{
+  text-decoration: none;
+  color: black;
+  font-size: 110%;
+  font-weight: 1100;
+}
+
+.sidebar-list{
+  margin: 10px 0;
+}
+
+
 .col-sm-2{
-  padding: 40px 0;
+  padding: 2.5% 0;
 /*  background-color: #f6f6f6;*/
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   min-height: 100vh;
@@ -40,4 +61,5 @@
 
 .col-sm-10{
   background-color: #f6f6f6;
+  padding: 2.5%;
 }

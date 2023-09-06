@@ -31,19 +31,23 @@
               <p class="profile-text">Computational Biology <br /> Ph.D. Candidate <br /> @ Duke-NUS Medical School</p>
               <div class="profile-links row">
                   <div class="link-column">
-                    <i class="fa-brands fa-github link-icon"></i>
+                    <a href="https://github.com/HaileyHryPark" class="fa fa-brands fa-github link-icon" target="_blank" rel="noopener noreferrer"></a>
                   </div>
                   <div class="link-column">
-                    <i class="fa-brands fa-linkedin link-icon"></i>
+                    <a href="https://www.linkedin.com/in/harry-park-b82418179/" class="fa fa-brands fa-linkedin link-icon" target="_blank" rel="noopener noreferrer"></a>
                   </div>
                   <div class="link-column">
-                    <i class="fa-solid fa-file link-icon"></i>
+                    <a href="https://github.com/HaileyHryPark" class="fa fa-solid fa-file link-icon"></a>
                   </div>
               </div>
             </div>
             <ul class="sidebar-nav">
-              <li><a href="{% url 'index' %}">Dashboard</a></li>
-              <li><a href="">Projects</a></li>
+              <li class="sidebar-list">
+                <a class="sidebar-list-content" href="{% url 'index' %}">Dashboard</a>
+              </li>
+              <li class="sidebar-list">
+                <a class="sidebar-list-content" href="">Projects</a>
+              </li>
             </ul>
           {% endblock %}
         </div>
