@@ -1,8 +1,24 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Main Dashboard</h1>
-  <p>
-    Summary panel
-  </p>
+  <div class="top-panel row">
+    <div class="col-8">
+      <h4>Main Dashboard</h4>
+      <p>
+        Current week: 0 / 0 week
+      </p>  
+    </div>
+    <div class="col-4 row">
+      <div class="btn-group column" role="group">
+        <button type="button" class="btn btn-secondary">Main</button>
+        <button type="button" class="btn btn-secondary">Location</button>
+        <button type="button" class="btn btn-secondary">Experience</button>
+      </div>
+      <div class="form-check form-switch column lightswitch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault"><i class="fa-regular fa-sun"></i></label>
+      </div>
+    </div> 
+  </div>
+  <hr style="margin: 1px 0;">
 {% endblock %}

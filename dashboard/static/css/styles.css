@@ -51,6 +51,14 @@
   margin: 10px 0;
 }
 
+.top-panel{
+  padding: 0 1%;
+}
+
+.lightswitch{
+  margin-left: auto; 
+  margin-right: 0;
+}
 
 .col-sm-2{
   padding: 2.5% 0;
@@ -61,5 +69,5 @@
 
 .col-sm-10{
   background-color: #f6f6f6;
-  padding: 2.5%;
+  padding: 1.5% 2.5%;
 }
