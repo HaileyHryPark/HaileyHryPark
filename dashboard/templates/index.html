@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <div class="top-panel row">
+  <!-- <div class="top-panel row">
     <div class="col-8">
       <h4>Main Dashboard</h4>
       <p>
@@ -20,5 +20,16 @@
       </div>
     </div> 
   </div>
-  <hr style="margin: 1px 0;">
+  <hr style="margin: 1px 0;"> -->
+  <div class="main-panel row">
+    {% for i in year_range %}
+      <div class="year-col">
+        {% for j in week_range %}
+          <div class="week-block">
+            <div class="week-dot"></div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

@@ -71,3 +71,21 @@
   background-color: #f6f6f6;
   padding: 1.5% 2.5%;
 }
+
+.year-col{
+  width: 1.25%;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.week-block{
+  aspect-ratio: 1 / 1; 
+  padding: 0;
+}
+
+.week-dot{
+  aspect-ratio: 1 / 1; 
+  border-radius: 50%; 
+  background-color: #B7D5E4;
+  width: 10px;
+}
