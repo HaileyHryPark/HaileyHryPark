@@ -54,11 +54,11 @@ class Week(models.Model):
 	# month = models.ForeignKey('Month', on_delete=models.PROTECT, null=True)
 	# year = models.ForeignKey('Year', on_delete=models.PROTECT, null=True)
 
-	location = models.ManyToManyField('Location')
+	location = models.ManyToManyField('Location', blank=True)
 
-	experience = models.ManyToManyField('Experience')
+	experience = models.ManyToManyField('Experience', blank=True)
 
-	log = models.TextField(max_length=1000)
+	log = models.TextField(max_length=1000, blank=True)
 
 	def __str__(self):
 		"""String for representing the Model object."""

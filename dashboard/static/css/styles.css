@@ -14,12 +14,12 @@
 }
 
 .profile-panel {
-  padding: 30px 0 10px 0;
+  padding: 3vh 0 1vh 0;
   font-size: 90%;
 }
 
 .profile-links{
-  padding: 10px 30%;
+  padding: 1vh 30%;
 }
 
 .link-column {
@@ -52,7 +52,11 @@
 }
 
 .top-panel{
-  padding: 0 1%;
+  padding: 0 0.5vw;
+}
+.top-panel-text{
+  display: inline-block;
+  margin-right: 1vw;
 }
 
 .lightswitch{
@@ -61,21 +65,33 @@
 }
 
 .col-sm-2{
-  padding: 2.5% 0;
-/*  background-color: #f6f6f6;*/
+  padding: 3.5vh 0;
+  background-color: #f5f5f5;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   min-height: 100vh;
 }
 
 .col-sm-10{
-  background-color: #f6f6f6;
-  padding: 1.5% 2.5%;
+  background-color: #ffffff;
+  padding: 1.5vh 2.5vh;
+}
+
+.main-panel{
+  padding: 0;
+  margin: 0;
 }
 
 .year-col{
-  width: 1.25%;
+  width: 1.01vw;
   min-height: 100vh;
   padding: 0;
+}
+
+.year-col-text{
+  /*transform: rotate(-90deg);*/
+  text-align: center;
+  font-size: 0.6vw;
+  margin-top: 1vh;
 }
 
 .week-block{
@@ -86,6 +102,24 @@
 .week-dot{
   aspect-ratio: 1 / 1; 
   border-radius: 50%; 
-  background-color: #B7D5E4;
-  width: 10px;
+  width: 0.8vw;
+}
+
+.week-dot-past{
+  background-color: #BDCDD6;
+}
+
+.week-dot-present{
+  background-color: #BDCDD6;
+  animation: blinkingBackground 2s infinite;
+}@keyframes blinkingBackground{
+  0%    { background-color: #6096B4;}
+  25%   { background-color: #BDCDD6;}
+  50%   { background-color: #6096B4;}
+  75%   { background-color: #BDCDD6;}
+  100%          { background-color: #6096B4;}
+}
+
+.week-dot-future{
+  background-color: #f4f4f4;
 }
