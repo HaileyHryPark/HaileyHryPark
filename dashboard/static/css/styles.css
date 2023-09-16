@@ -51,6 +51,14 @@
   margin: 10px 0;
 }
 
+.top-panel{
+  padding: 0 1%;
+}
+
+.lightswitch{
+  margin-left: auto; 
+  margin-right: 0;
+}
 
 .col-sm-2{
   padding: 2.5% 0;
@@ -61,5 +69,23 @@
 
 .col-sm-10{
   background-color: #f6f6f6;
-  padding: 2.5%;
+  padding: 1.5% 2.5%;
+}
+
+.year-col{
+  width: 1.25%;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.week-block{
+  aspect-ratio: 1 / 1; 
+  padding: 0;
+}
+
+.week-dot{
+  aspect-ratio: 1 / 1; 
+  border-radius: 50%; 
+  background-color: #B7D5E4;
+  width: 10px;
 }
