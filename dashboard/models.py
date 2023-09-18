@@ -54,9 +54,9 @@ class Week(models.Model):
 	# month = models.ForeignKey('Month', on_delete=models.PROTECT, null=True)
 	# year = models.ForeignKey('Year', on_delete=models.PROTECT, null=True)
 
-	location = models.ManyToManyField('Location', blank=True)
+	location = models.ManyToManyField('LocationInstance', blank=True)
 
-	experience = models.ManyToManyField('Experience', blank=True)
+	experience = models.ManyToManyField('ExperienceInstance', blank=True)
 
 	log = models.TextField(max_length=1000, blank=True)
 
@@ -68,6 +68,8 @@ class Week(models.Model):
 		"""Returns the URL to access a detail record for this week."""
 		return reverse('week-detail', args=[str(self.id)])
 
+	# def update_week(self):
+
     # def display_calendar_name(self):
     #     """Create a string for the Calendar Name. """
     #     return f'Week {self.week_of_month}, {self.month.name} {self.year.name}'
@@ -76,22 +78,34 @@ class Week(models.Model):
 
 class Location(models.Model):
 	name = models.CharField(max_length=200)
-	notes = models.TextField(max_length=1000)
+	color = models.CharField(max_length=7)
 
-	start_date = models.DateField()
-	end_date = models.DateField()
+	# weeks = models.ManyToManyField('Week', blank=True)
 
 	def __str__(self):
 		"""String for representing the Model object."""
 		return self.name
 
-
-class Experience(models.Model):
-	name = models.CharField(max_length=200)
-	notes = models.TextField(max_length=1000)
+class LocationInstance(models.Model):
+	"""docstring for LocationInstane"""
+	location = models.ForeignKey('Location', on_delete=models.PROTECT, null=True)
 
 	start_date = models.DateField()
 	end_date = models.DateField()
+
+	notes = models.TextField(max_length=1000, blank=True)
+
+	def __str__(self):
+		"""String for representing the Model object."""
+		return f'{self.location.name} ({self.location.start_date.strftime("%Y/%m/%d")} - {self.location.end_date.strftime("%Y/%m/%d")})'
+		
+
+
+class Experience(models.Model):
+	name = models.CharField(max_length=200)
+	color = models.CharField(max_length=7)
+
+	# weeks = models.ManyToManyField('Week', blank=True)
 
 	TYPE = (
         ('e', 'Education'),
@@ -111,3 +125,15 @@ class Experience(models.Model):
 		return self.name
 
 
+class ExperienceInstance(models.Model):
+	"""docstring for LocationInstane"""
+	experience = models.ForeignKey('Experience', on_delete=models.PROTECT, null=True)
+
+	start_date = models.DateField()
+	end_date = models.DateField()
+
+	# notes = models.TextField(max_length=1000, blank=True)
+
+	def __str__(self):
+		"""String for representing the Model object."""
+		return f'{self.experience.name} ({self.experience.start_date.strftime("%Y/%m/%d")} - {self.experience.end_date.strftime("%Y/%m/%d")})'

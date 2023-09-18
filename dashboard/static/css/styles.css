@@ -1,9 +1,28 @@
+/*base_generic.html*/
+.col-sm-2{
+  padding: 3.5vh 1.5vw;
+  background-color: #f5f5f5;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  min-height: 100vh;
+  max-width: 15vw;
+}
+
+.col-sm-10{
+  background-color: #ffffff;
+  padding: 1.5vh 1.5vw;
+  min-width: 85vw;
+}
+
 .sidebar-nav {
-  margin: 10px;
+  margin: 3vh 2vw;
 /*  margin-right: 15px;*/
 /*  margin-left: 15px;*/
   padding: 0;
   list-style: none;
+}
+
+.sidebar-nav ul li a {
+  text-align: left;
 }
 
 .profile-photo {
@@ -14,21 +33,21 @@
 }
 
 .profile-panel {
-  padding: 3vh 0 1vh 0;
+  padding: 3vh 0 2vh 0;
   font-size: 90%;
 }
 
 .profile-links{
-  padding: 1vh 30%;
+  padding: 0.8vh 25%;
 }
 
 .link-column {
   float: left;
-  width: 33.33%;
+  width: 25%;
 }
 
 .link-icon {
-  font-size:180%;
+  font-size: 1.2vw;
 }
 
 .fa {
@@ -51,6 +70,9 @@
   margin: 10px 0;
 }
 
+
+
+/*index.html*/
 .top-panel{
   padding: 0 0.5vw;
 }
@@ -64,32 +86,20 @@
   margin-right: 0;
 }
 
-.col-sm-2{
-  padding: 3.5vh 0;
-  background-color: #f5f5f5;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  min-height: 100vh;
-}
-
-.col-sm-10{
-  background-color: #ffffff;
-  padding: 1.5vh 2.5vh;
-}
-
 .main-panel{
   padding: 0;
   margin: 0;
 }
 
 .year-col{
-  width: 1.01vw;
+  width: 1.02vw;
   min-height: 100vh;
   padding: 0;
 }
 
 .year-col-text{
   /*transform: rotate(-90deg);*/
-  text-align: center;
+  text-align: left;
   font-size: 0.6vw;
   margin-top: 1vh;
 }
