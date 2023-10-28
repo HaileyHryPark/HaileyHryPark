@@ -26,17 +26,17 @@
     <div class="year-col">
       <div class="year-col-text">{{year}}</div>
       {% for week in weeks %}
-      {% if week.week_num < current_week_num %}
-        <div class="week-block">
-            <div class="week-dot week-dot-past"></div>
-        </div>  
-      {% elif week.week_num == current_week_num %}
-        <div class="week-block">
-            <div class="week-dot week-dot-present"></div>
-        </div>  
-      {% else %}
+      {% if week.week_num > current_week_num %}
         <div class="week-block">
             <div class="week-dot week-dot-future"></div>
+        </div>  
+      {% elif week.week_num == current_week_num %}  
+        <div class="week-block">
+            <div class="week-dot" style="background-color: {{ week.get_location_l_color_highlight }};"></div>
+        </div>
+      {% else %}
+        <div class="week-block">
+            <div class="week-dot" style="background-color: {{ week.get_location_l_color }};"></div>
         </div>  
       {% endif %}  
       {% endfor %}
