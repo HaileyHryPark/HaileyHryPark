@@ -23,7 +23,7 @@ def index(request):
 		'year_week_count': year_week_count,
 	}
 
-	return render(request, 'index.html', context=context)
+	return render(request, 'apps/dashboard/index.html', context=context)
 
 def location(request):
 	weeks = Week.objects.all()
@@ -45,7 +45,7 @@ def location(request):
 		'year_week_count': year_week_count,
 	}
 
-	return render(request, 'location.html', context=context)
+	return render(request, 'apps/dashboard/location.html', context=context)
 
 def experience(request):
 	weeks = Week.objects.all()
@@ -67,4 +67,4 @@ def experience(request):
 		'year_week_count': year_week_count,
 	}
 
-	return render(request, 'experience.html', context=context)
+	return render(request, 'apps/dashboard/experience.html', context=context)
