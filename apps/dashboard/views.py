@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Week, Location, Experience
+from .models import Week, Location, ExperienceInstance
 from datetime import date, time, datetime, timedelta
 
 # Create your views here.

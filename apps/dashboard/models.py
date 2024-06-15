@@ -101,11 +101,29 @@ class Week(models.Model):
 
 		return self.location.all().filter(location_type__exact = 'l').first().location.highlight_color
 
-	# def update_week(self):
+	def get_experience_color(self):
+		if self.experience.count() == 0:
+			""" if the week is not associated with any l location instance """
+			exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date).order_by("experience_type").first()
+			if exp is None:
+				return "#f4f4f4"
+			
+			else:
+				self.experience.add(exp)
 
-    # def display_calendar_name(self):
-    #     """Create a string for the Calendar Name. """
-    #     return f'Week {self.week_of_month}, {self.month.name} {self.year.name}'
+		return self.experience.all().first().base_color
+
+	def get_experience_color_highlight(self):
+		if self.experience.count() == 0:
+			""" if the week is not associated with any l location instance """
+			exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date).order_by("experience_type").first()
+			if exp is None:
+				return "#999999"
+			
+			else:
+				self.experience.add(exp)
+
+		return self.experience.all().first().highlight_color
 
 
 
@@ -128,17 +146,17 @@ class LocationInstance(models.Model):
 	end_date = models.DateField()
 
 	TYPE = (
-        ('l', 'Living'),
-        ('h', 'Hybrid'),
-        ('t', 'Travel'),
-        ('o', 'Other'),
-    )
+		('l', 'Living'),
+		('h', 'Hybrid'),
+		('t', 'Travel'),
+		('o', 'Other'),
+	)
 
 	location_type = models.CharField(
-        max_length=1,
-        choices=TYPE,
-        default='o',
-    )
+		max_length=1,
+		choices=TYPE,
+		default='o',
+	)
 
 	notes = models.TextField(max_length=1000, blank=True)
 
@@ -148,39 +166,30 @@ class LocationInstance(models.Model):
 		
 
 
-class Experience(models.Model):
-	name = models.CharField(max_length=200)
-	base_color = models.CharField(max_length=7)
-	highlight_color = models.CharField(max_length=7)
-
-	# weeks = models.ManyToManyField('Week', blank=True)
-
-	def __str__(self):
-		"""String for representing the Model object."""
-		return self.name
-
-
 class ExperienceInstance(models.Model):
-	"""docstring for LocationInstane"""
-	experience = models.ForeignKey('Experience', on_delete=models.PROTECT, null=True)
+	name = models.CharField(max_length=200)
+	subname = models.CharField(max_length=200, blank=True)
+	
+	TYPE = (
+		('w', 'Work'),
+		('e', 'Education'),
+		('o', 'Other'),
+		)
 
+	experience_type = models.CharField(
+		max_length=1,
+		choices=TYPE,
+		default='o',
+		)
+	
 	start_date = models.DateField()
 	end_date = models.DateField()
 
-	TYPE = (
-        ('e', 'Education'),
-        ('w', 'Work'),
-        ('o', 'Other'),
-    )
-
-	experience_type = models.CharField(
-        max_length=1,
-        choices=TYPE,
-        default='o',
-    )
-
+	base_color = models.CharField(max_length=7)
+	highlight_color = models.CharField(max_length=7)
+	
 	notes = models.TextField(max_length=1000, blank=True)
 
 	def __str__(self):
 		"""String for representing the Model object."""
-		return f'{self.experience.name} ({self.start_date.strftime("%Y/%m/%d")} - {self.end_date.strftime("%Y/%m/%d")})'
+		return f'{self.name} ({self.start_date.strftime("%Y/%m/%d")} - {self.end_date.strftime("%Y/%m/%d")})'
