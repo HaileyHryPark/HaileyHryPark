@@ -1,0 +1,55 @@
+{% load static %}
+<img
+  class="profile-photo"
+  src="{{ profile.picture.url }}"
+  alt="Profile photo" />  
+<div class="profile-panel">
+  {% if profile.name %}
+  <h4>{{ profile.name }}</h4>  
+  {% endif %}
+  {% if profile.bio %}
+  <p class="profile-text">{{ profile.bio }}</p>
+  {% endif %}
+     
+  <div class="profile-links row">
+      <div class="link-column">
+        <a href="https://github.com/HaileyHryPark" class="fa fa-solid fa-user-graduate link-icon"></a>
+      </div>
+      <div class="link-column">
+        <a href="https://github.com/HaileyHryPark" class="fa fa-brands fa-github link-icon" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+      <div class="link-column">
+        <a href="https://www.linkedin.com/in/harry-park-b82418179/" class="fa fa-brands fa-linkedin link-icon" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+      
+      <div class="link-column">
+        <a href="https://github.com/HaileyHryPark" class="fa fa-solid fa-file link-icon"></a>
+      </div>
+  </div>
+</div>
+<hr style="margin: 1px 0;">
+<ul class="sidebar-nav">
+  <li class="sidebar-list list-unstyled">
+    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#weekboard-list" aria-expanded="true">
+      Weekboard
+    </button>
+    <div class="collapse show" id="weekboard-list">
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+        <li><a href="{% url 'index' %}" class="link-dark rounded">Main</a></li>
+        <li><a href="{% url 'location' %}" class="link-dark rounded">Location</a></li>
+        <li><a href="{% url 'experience' %}" class="link-dark rounded">Experience</a></li>
+      </ul>
+    </div>
+  </li>
+  <li class="sidebar-list list-unstyled">
+    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#project-collapse" aria-expanded="true">
+      Project
+    </button>
+    <div class="collapse show" id="project-collapse">
+      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+        <li><a href="#" class="link-dark rounded">Project 1</a></li>
+        <li><a href="#" class="link-dark rounded">Project 2</a></li>
+      </ul>
+    </div>
+  </li>
+</ul>

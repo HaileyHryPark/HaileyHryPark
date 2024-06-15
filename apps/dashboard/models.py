@@ -72,16 +72,15 @@ class Week(models.Model):
 		if self.location.filter(location_type__exact = 'l').count() == 0:
 			""" if the week is not associated with any l location instance """
 			loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.start_date, end_date__gte=self.start_date).first()
-			
 			if loc is not None:
 				self.location.add(loc)
 			
 			else:
 				""" if the current l location instance is not yet updated """
-				latest_loc = LocationInstance.objects.all().order_by('-end_date').first()
+				latest_loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.end_date).order_by('-end_date').first()
 				latest_loc.end_date = self.end_date
 				latest_loc.save()
-				self.location.add(loc)
+				self.location.add(latest_loc)
 
 		return self.location.all().filter(location_type__exact = 'l').first().location.base_color
 
@@ -95,10 +94,10 @@ class Week(models.Model):
 			
 			else:
 				""" if the current l location instance is not yet updated """
-				latest_loc = LocationInstance.objects.all().order_by('-end_date').first()
+				latest_loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.end_date).order_by('-end_date').first()
 				latest_loc.end_date = self.end_date
 				latest_loc.save()
-				self.location.add(loc)
+				self.location.add(latest_loc)
 
 		return self.location.all().filter(location_type__exact = 'l').first().location.highlight_color
 

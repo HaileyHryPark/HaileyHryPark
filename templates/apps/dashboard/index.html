@@ -28,11 +28,11 @@
       {% for week in weeks %}
       {% if week.week_num < current_week_num %}
         <div class="week-block">
-            <div class="week-dot week-dot-past"></div>
+            <div class="week-dot" style="background-color: #BDCDD6;"></div>
         </div>  
       {% elif week.week_num == current_week_num %}
         <div class="week-block">
-            <div class="week-dot week-dot-present"></div>
+            <div class="week-dot blinking-background" style="--blink-color: #6096B4; --original-color: #BDCDD6;"></div>
         </div>  
       {% else %}
         <div class="week-block">

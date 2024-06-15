@@ -115,19 +115,16 @@
   width: 0.8vw;
 }
 
-.week-dot-past{
-  background-color: #BDCDD6;
+@keyframes blinkingBackground{
+  0%    { background-color: var(--blink-color,  #ccc);}
+  25%   { background-color: var(--original-color, #f0f0f0);}
+  50%   { background-color: var(--blink-color,  #ccc);}
+  75%   { background-color: var(--original-color, #f0f0f0);}
+  100%  { background-color: var(--blink-color,  #ccc);}
 }
 
-.week-dot-present{
-  background-color: #BDCDD6;
-  animation: blinkingBackground 2s infinite;
-}@keyframes blinkingBackground{
-  0%    { background-color: #6096B4;}
-  25%   { background-color: #BDCDD6;}
-  50%   { background-color: #6096B4;}
-  75%   { background-color: #BDCDD6;}
-  100%          { background-color: #6096B4;}
+.blinking-background {
+    animation: blinkingBackground 2s infinite !important;
 }
 
 .week-dot-future{
