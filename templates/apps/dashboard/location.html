@@ -32,11 +32,11 @@
         </div>  
       {% elif week.week_num == current_week_num %}  
         <div class="week-block">
-            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_location_l_color_highlight }}; --original-color: {{ week.get_location_l_color }};"></div>
+            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_location_color_highlight }}; --original-color: {{ week.get_location_color }};"></div>
         </div>
       {% else %}
         <div class="week-block">
-            <div class="week-dot" style="background-color: {{ week.get_location_l_color }};"></div>
+            <div class="week-dot" style="background-color: {{ week.get_location_color }};"></div>
         </div>  
       {% endif %}  
       {% endfor %}

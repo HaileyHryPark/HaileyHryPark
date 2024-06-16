@@ -68,63 +68,82 @@ class Week(models.Model):
 		"""Returns the URL to access a detail record for this week."""
 		return reverse('week-detail', args=[str(self.id)])
 
-	def get_location_l_color(self):
-		if self.location.filter(location_type__exact = 'l').count() == 0:
+	def get_location_color(self):
+		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		current_loc = LocationInstance.objects.all().filter(location_type__exact = 'l').order_by("-end_date").first()
+		## Progressive update for the current location
+		if (self.end_date > current_loc.end_date) & (current_loc not in loc):	
+			current_loc.end_date = self.end_date
+			current_loc.save()
+			self.location.add(loc)
+
+		elif loc.count() == 0:
+			return "#f4f4f4"
+
+		## Update if there is any addition to experience instances
+		elif self.location.count() < loc.count():
 			""" if the week is not associated with any l location instance """
-			loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.start_date, end_date__gte=self.start_date).first()
-			if loc is not None:
-				self.location.add(loc)
-			
-			else:
-				""" if the current l location instance is not yet updated """
-				latest_loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.end_date).order_by('-end_date').first()
-				latest_loc.end_date = self.end_date
-				latest_loc.save()
-				self.location.add(latest_loc)
+			self.location.set(loc)
 
-		return self.location.all().filter(location_type__exact = 'l').first().location.base_color
+		return self.location.all().order_by("-location_type").first().location.base_color
 
-	def get_location_l_color_highlight(self):
-		if self.location.filter(location_type__exact = 'l').count() == 0:
+	def get_location_color_highlight(self):
+		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		current_loc = LocationInstance.objects.all().filter(location_type__exact = 'l').order_by("-end_date").first()
+		## Progressive update for the current location
+		if (self.end_date > current_loc.end_date) & (current_loc not in loc):	
+			current_loc.end_date = self.end_date
+			current_loc.save()
+			self.location.add(loc)
+
+		elif loc.count() == 0:
+			return "#f4f4f4"
+
+		## Update if there is any addition to experience instances
+		elif self.location.count() < loc.count():
 			""" if the week is not associated with any l location instance """
-			loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.start_date, end_date__gte=self.start_date).first()
-			
-			if loc is not None:
-				self.location.add(loc)
-			
-			else:
-				""" if the current l location instance is not yet updated """
-				latest_loc = LocationInstance.objects.all().filter(location_type__exact = 'l', start_date__lte=self.end_date).order_by('-end_date').first()
-				latest_loc.end_date = self.end_date
-				latest_loc.save()
-				self.location.add(latest_loc)
+			self.location.set(loc)
 
-		return self.location.all().filter(location_type__exact = 'l').first().location.highlight_color
+		return self.location.all().order_by("-location_type").first().location.highlight_color
+
 
 	def get_experience_color(self):
-		if self.experience.count() == 0:
-			""" if the week is not associated with any l location instance """
-			exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date).order_by("experience_type").first()
-			if exp is None:
-				return "#f4f4f4"
-			
-			else:
-				self.experience.add(exp)
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		current_exp = ExperienceInstance.objects.all().filter(name__exact = "Duke-NUS Medical School").first()
+		## Progressive update for the current experience
+		if (self.end_date > current_exp.end_date) & (current_exp not in exp):	
+			current_exp.end_date = self.end_date
+			current_exp.save()
+			self.experience.add(exp)
 
-		return self.experience.all().first().base_color
+		elif exp.count() == 0:
+			return "#f4f4f4"
+
+		## Update if there is any addition to experience instances
+		elif self.experience.count() < exp.count():
+			""" if the week is not associated with any l location instance """
+			self.experience.set(exp)
+
+		return self.experience.all().order_by("-experience_type").first().base_color
 
 	def get_experience_color_highlight(self):
-		if self.experience.count() == 0:
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		current_exp = ExperienceInstance.objects.all().filter(name__exact = "Duke-NUS Medical School").first()
+		## Progressive update for the current experience
+		if (self.end_date > current_exp.end_date) & (current_exp not in exp):	
+			current_exp.end_date = self.end_date
+			current_exp.save()
+			self.experience.add(exp)
+
+		elif exp.count() == 0:
+			return "#f4f4f4"
+
+		## Update if there is any addition to experience instances
+		elif self.experience.count() < exp.count():
 			""" if the week is not associated with any l location instance """
-			exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date).order_by("experience_type").first()
-			if exp is None:
-				return "#999999"
-			
-			else:
-				self.experience.add(exp)
+			self.experience.set(exp)
 
-		return self.experience.all().first().highlight_color
-
+		return self.experience.all().order_by("-experience_type").first().highlight_color
 
 
 class Location(models.Model):
@@ -141,14 +160,15 @@ class Location(models.Model):
 class LocationInstance(models.Model):
 	"""docstring for LocationInstane"""
 	location = models.ForeignKey('Location', on_delete=models.PROTECT, null=True, blank=True)
+	sublocation = models.CharField(max_length=200, blank=True)
 
 	start_date = models.DateField()
 	end_date = models.DateField()
 
 	TYPE = (
-		('l', 'Living'),
-		('h', 'Hybrid'),
 		('t', 'Travel'),
+		('h', 'Hybrid'),
+		('l', 'Living'),
 		('o', 'Other'),
 	)
 
