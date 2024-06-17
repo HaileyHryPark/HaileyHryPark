@@ -113,6 +113,7 @@
   aspect-ratio: 1 / 1; 
   border-radius: 50%; 
   width: 0.8vw;
+  position: relative;
 }
 
 @keyframes blinkingBackground{
@@ -129,4 +130,44 @@
 
 .week-dot-future{
   background-color: #f4f4f4;
+}
+
+.speech-bubble {
+    visibility: hidden;
+    width: 7em;
+    background-color: var(--highlight-color);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0 7px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.speech-bubble::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -2px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--highlight-color) transparent transparent transparent;
+}
+
+.week-dot:hover .speech-bubble {
+    visibility: visible;
+    opacity: 1;
+}
+
+.speech-bubble .small-text {
+    margin: 0;
+    padding: 0;
+    white-space: pre-line;
+    font-size: 0.5em; /* Adjust this value as needed */
 }

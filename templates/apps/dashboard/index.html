@@ -32,7 +32,13 @@
         </div>  
       {% elif week.week_num == current_week_num %}
         <div class="week-block">
-            <div class="week-dot blinking-background" style="--blink-color: #6096B4; --original-color: #BDCDD6;"></div>
+            <div class="week-dot blinking-background" style="--blink-color: #6096B4; --original-color: #BDCDD6;">
+              <div class="speech-bubble" style="--highlight-color: #6096B4;">
+              Week {{ week.week_num }}<br>
+                <p class="small-text">From {{ week.start_date|date:'Y-m-d' }} </p>
+                <p class="small-text"> To {{ week.end_date|date:'Y-m-d' }}</p>
+              </div>
+            </div>
         </div>  
       {% else %}
         <div class="week-block">

@@ -3,7 +3,7 @@
 {% block content %}
   <div class="top-panel row">
     <div class="col-8">
-      <h4 class="top-panel-text">Experience / Education Weekboard</h4>
+      <h4 class="top-panel-text">By Experience / Education </h4>
       <p class="top-panel-text">
         {{current_week_num}} / {{total_week_count}} week
       </p>  
@@ -32,11 +32,21 @@
         </div>  
       {% elif week.week_num == current_week_num %}  
         <div class="week-block">
-            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_experience_color_highlight }}; --original-color: {{ week.get_experience_color }};"></div>
+            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_experience_color_highlight }}; --original-color: {{ week.get_experience_color }};">
+              <div class="speech-bubble" style="--highlight-color: {{ week.get_experience_color_highlight }};">
+              Week {{ week.week_num }}<br>
+                <p class="small-text"> {{ week.get_experience_label }} </p>
+              </div>
+            </div>
         </div>
       {% else %}
         <div class="week-block">
-            <div class="week-dot" style="background-color: {{ week.get_experience_color }};"></div>
+            <div class="week-dot" style="background-color: {{ week.get_experience_color }};">
+              <div class="speech-bubble" style="--highlight-color: {{ week.get_experience_color_highlight }};">
+              Week {{ week.week_num }}<br>
+                <p class="small-text"> {{ week.get_experience_label }} </p>
+              </div>
+            </div>
         </div>  
       {% endif %}  
       {% endfor %}

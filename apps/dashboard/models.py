@@ -68,6 +68,14 @@ class Week(models.Model):
 		"""Returns the URL to access a detail record for this week."""
 		return reverse('week-detail', args=[str(self.id)])
 
+	def get_location_label(self):
+		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return "\n".join(location.format_location_label() for location in loc)
+
+	def get_experience_label(self):
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return "\n".join(experience.format_experience_label() for experience in exp)
+
 	def get_location_color(self):
 		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
 		current_loc = LocationInstance.objects.all().filter(location_type__exact = 'l').order_by("-end_date").first()
@@ -180,6 +188,23 @@ class LocationInstance(models.Model):
 
 	notes = models.TextField(max_length=1000, blank=True)
 
+	def format_location_label(self):
+		# if self.location_type == 'l':
+		# 	location = f"Lived in {self.location.name}"
+		# 	if self.sublocation:
+		# 		location += f" ({self.sublocation})"
+		# 	return location
+		# elif self.location_type == 't':
+		# 	location = f"Traveled to {self.location.name}"
+		# 	if self.sublocation:
+		# 		location += f" ({self.sublocation})"
+		# 	return location
+
+		# location = f"{self.location.name}"
+		# if self.sublocation:
+		# 	location += f" ({self.sublocation})"
+		return f"{self.location.name}"	
+		
 	def __str__(self):
 		"""String for representing the Model object."""
 		return f'{self.location.name} ({self.start_date.strftime("%Y/%m/%d")} - {self.end_date.strftime("%Y/%m/%d")})'
@@ -209,6 +234,12 @@ class ExperienceInstance(models.Model):
 	highlight_color = models.CharField(max_length=7)
 	
 	notes = models.TextField(max_length=1000, blank=True)
+
+	def format_experience_label(self):
+		experience = f"{self.name}"
+		if self.subname:
+			experience += f" ({self.subname})"
+		return experience	
 
 	def __str__(self):
 		"""String for representing the Model object."""
