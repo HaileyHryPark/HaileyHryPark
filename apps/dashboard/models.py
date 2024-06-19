@@ -72,9 +72,14 @@ class Week(models.Model):
 		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
 		return "\n".join(location.format_location_label() for location in loc)
 
+	def has_experience_label(self):
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return exp.count() > 0
+
 	def get_experience_label(self):
 		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
-		return "\n".join(experience.format_experience_label() for experience in exp)
+		res = "\n".join(experience.format_experience_label() for experience in exp)
+		return res.strip() if res else ""
 
 	def get_location_color(self):
 		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
