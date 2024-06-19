@@ -32,7 +32,7 @@
         </div>  
       {% elif week.week_num == current_week_num %}  
         <div class="week-block">
-            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_experience_color_highlight }}; --original-color: {{ week.get_experience_color }};">
+            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_experience_color_highlight }}; --original-color: {{ week.get_experience_color }};"  onclick="showExpPopup('{{ week.week_num }}', '{{ week.get_experience_content }}', '{{ week.get_experience_color }}', '{{ week.get_experience_color_highlight }}')">
                 <div class="speech-bubble" style="--highlight-color: {{ week.get_experience_color_highlight }};">
                 Week {{ week.week_num }}<br>
                   <p class="small-text"> {{ week.get_experience_label }} </p>
@@ -41,18 +41,28 @@
         </div>
       {% else %}
         <div class="week-block">
-            <div class="week-dot" style="background-color: {{ week.get_experience_color }};">
-              {% if week.has_experience_label %}
+            {% if week.has_experience_label %}
+            <div class="week-dot" style="background-color: {{ week.get_experience_color }};"  onclick="showExpPopup('{{ week.week_num }}', '{{ week.get_experience_content }}', '{{ week.get_experience_color }}', '{{ week.get_experience_color_highlight }}')">
               <div class="speech-bubble" style="--highlight-color: {{ week.get_experience_color_highlight }};">
               Week {{ week.week_num }}<br>
                 <p class="small-text"> {{ week.get_experience_label }} </p>
               </div>
-              {% endif %}
             </div>
+            {% else %}
+            <div class="week-dot" style="background-color: {{ week.get_experience_color }};">
+            </div>
+            {% endif %}
         </div>  
       {% endif %}  
       {% endfor %}
     </div>
     {% endfor %}
+  </div>
+  <div id="exp-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+      <span class="close-button" onclick="hideExpPopup()">&times;</span>
+      <h3 id="exp-popup-title"></h3>
+      <p id="exp-popup-info"></p>
+    </div>
   </div>
 {% endblock %}

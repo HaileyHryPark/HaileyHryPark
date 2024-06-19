@@ -32,7 +32,7 @@
         </div>  
       {% elif week.week_num == current_week_num %}  
         <div class="week-block">
-            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_location_color_highlight }}; --original-color: {{ week.get_location_color }};">
+            <div class="week-dot blinking-background" style="--blink-color: {{ week.get_location_color_highlight }}; --original-color: {{ week.get_location_color }};" onclick="showLocPopup('{{ week.week_num }}', '{{ week.get_location_content }}', '{{ week.get_location_color }}', '{{ week.get_location_color_highlight }}')">
               <div class="speech-bubble" style="--highlight-color: {{ week.get_location_color_highlight }};">
               Week {{ week.week_num }}<br>
                 <p class="small-text"> {{ week.get_location_label }} </p>
@@ -41,8 +41,8 @@
         </div>
       {% else %}
         <div class="week-block">
-            <div class="week-dot" style="background-color: {{ week.get_location_color }};">
-              <div class="speech-bubble" style="--highlight-color: {{ week.get_location_color_highlight }};">
+            <div class="week-dot" style="background-color: {{ week.get_location_color }};" onclick="showLocPopup('{{ week.week_num }}', '{{ week.get_location_content }}', '{{ week.get_location_color }}', '{{ week.get_location_color_highlight }}')">
+              <div class="speech-bubble" style="--highlight-color: {{ week.get_location_color_highlight }};" >
               Week {{ week.week_num }}<br>
                 <p class="small-text"> {{ week.get_location_label }} </p>
               </div>
@@ -52,5 +52,12 @@
       {% endfor %}
     </div>
     {% endfor %}
+  </div>
+  <div id="loc-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+      <span class="close-button" onclick="hideLocPopup()">&times;</span>
+      <h3 id="loc-popup-title"></h3>
+      <p id="loc-popup-info"></p>
+    </div>
   </div>
 {% endblock %}

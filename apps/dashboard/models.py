@@ -72,15 +72,6 @@ class Week(models.Model):
 		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
 		return "\n".join(location.format_location_label() for location in loc)
 
-	def has_experience_label(self):
-		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
-		return exp.count() > 0
-
-	def get_experience_label(self):
-		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
-		res = "\n".join(experience.format_experience_label() for experience in exp)
-		return res.strip() if res else ""
-
 	def get_location_color(self):
 		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
 		current_loc = LocationInstance.objects.all().filter(location_type__exact = 'l').order_by("-end_date").first()
@@ -118,7 +109,18 @@ class Week(models.Model):
 			self.location.set(loc)
 
 		return self.location.all().order_by("-location_type").first().location.highlight_color
+	
+	def get_location_content(self):
+		loc = LocationInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | LocationInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | LocationInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return "<br>".join(location.format_location_content() for location in loc)
 
+	def has_experience_label(self):
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return exp.count() > 0
+
+	def get_experience_label(self):
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return "\n".join(experience.format_experience_label() for experience in exp)
 
 	def get_experience_color(self):
 		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
@@ -158,6 +160,10 @@ class Week(models.Model):
 
 		return self.experience.all().order_by("-experience_type").first().highlight_color
 
+	def get_experience_content(self):
+		exp = ExperienceInstance.objects.all().filter(start_date__lte=self.start_date, end_date__gte=self.start_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, end_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(start_date__gte=self.start_date, start_date__lte=self.end_date) | ExperienceInstance.objects.all().filter(end_date__gte=self.start_date, end_date__lte=self.end_date)
+		return "<br>".join(experience.format_experience_content() for experience in exp)
+
 
 class Location(models.Model):
 	name = models.CharField(max_length=200)
@@ -194,21 +200,24 @@ class LocationInstance(models.Model):
 	notes = models.TextField(max_length=1000, blank=True)
 
 	def format_location_label(self):
-		# if self.location_type == 'l':
-		# 	location = f"Lived in {self.location.name}"
-		# 	if self.sublocation:
-		# 		location += f" ({self.sublocation})"
-		# 	return location
-		# elif self.location_type == 't':
-		# 	location = f"Traveled to {self.location.name}"
-		# 	if self.sublocation:
-		# 		location += f" ({self.sublocation})"
-		# 	return location
-
-		# location = f"{self.location.name}"
-		# if self.sublocation:
-		# 	location += f" ({self.sublocation})"
 		return f"{self.location.name}"	
+
+	def format_location_content(self):
+		if self.location_type == 'l':
+			location = f"Lived in {self.location.name}"
+			if self.sublocation:
+				location += f" ({self.sublocation})"
+			return location
+		elif self.location_type == 't':
+			location = f"Traveled to {self.location.name}"
+			if self.sublocation:
+				location += f" ({self.sublocation})"
+			return location
+
+		location = f"{self.location.name}"
+		if self.sublocation:
+			location += f" ({self.sublocation})"
+		return location
 		
 	def __str__(self):
 		"""String for representing the Model object."""
@@ -218,7 +227,7 @@ class LocationInstance(models.Model):
 
 class ExperienceInstance(models.Model):
 	name = models.CharField(max_length=200)
-	subname = models.CharField(max_length=200, blank=True)
+	subname = models.CharField(max_length=200)
 	
 	TYPE = (
 		('w', 'Work'),
@@ -241,10 +250,13 @@ class ExperienceInstance(models.Model):
 	notes = models.TextField(max_length=1000, blank=True)
 
 	def format_experience_label(self):
+		return f"{self.subname}"
+
+	def format_experience_content(self):
 		experience = f"{self.name}"
 		if self.subname:
 			experience += f" ({self.subname})"
-		return experience	
+		return experience
 
 	def __str__(self):
 		"""String for representing the Model object."""
